@@ -40,12 +40,8 @@ export function Header() {
         <div className="flex h-16 items-center justify-between">
           {/* Logo */}
           <div className="flex items-center">
-            <Link to="/" className="flex items-center gap-2">
-              <img src={logo} alt="Evensia" className="h-14 w-auto" />
-              <span className="text-xl font-bold">
-                <span className="text-primary">Even</span>
-                <span className="text-foreground">sia</span>
-              </span>
+            <Link to="/" className="flex items-center gap-3">
+              <img src={logo} alt="Evensia" className="h-12 w-auto" />
             </Link>
           </div>
 

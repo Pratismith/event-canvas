@@ -30,12 +30,11 @@ export function Footer() {
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-5 gap-8">
           {/* Brand */}
           <div className="lg:col-span-2">
-            <Link to="/" className="flex items-center gap-2 mb-4">
-              <img src={logo} alt="Evensia" className="h-16 w-auto" />
-              <span className="text-xl font-bold">Evensia</span>
+            <Link to="/" className="flex items-center mb-4">
+              <img src={logo} alt="Evensia" className="h-20 w-auto" />
             </Link>
             <p className="text-secondary-foreground/80 mb-6 max-w-sm">
-              Digital footprint of a physical event. Take events beyond venues and unlock access for everyone.
+              Crafting Unforgettable Experiences. Take events beyond venues and unlock access for everyone.
             </p>
             <div className="flex gap-4">
               <a
