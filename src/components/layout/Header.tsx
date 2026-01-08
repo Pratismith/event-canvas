@@ -1,7 +1,8 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { Link, useLocation } from "react-router-dom";
 import { Button } from "@/components/ui/button";
-import { Menu, X } from "lucide-react";
+import { Menu, X, Moon, Sun } from "lucide-react";
+import { Switch } from "@/components/ui/switch";
 
 const navigation = [
   { name: "Home", href: "/" },
@@ -14,23 +15,43 @@ const navigation = [
 
 export function Header() {
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
+  const [isDark, setIsDark] = useState(false);
   const location = useLocation();
 
+  useEffect(() => {
+    const isDarkMode = document.documentElement.classList.contains("dark");
+    setIsDark(isDarkMode);
+  }, []);
+
+  const toggleTheme = () => {
+    const newIsDark = !isDark;
+    setIsDark(newIsDark);
+    if (newIsDark) {
+      document.documentElement.classList.add("dark");
+    } else {
+      document.documentElement.classList.remove("dark");
+    }
+  };
+
   return (
-    <header className="fixed top-0 left-0 right-0 z-50 bg-background/80 backdrop-blur-md border-b border-border">
+    <header className="fixed top-0 left-0 right-0 z-50 bg-background/95 backdrop-blur-md border-b border-border shadow-sm">
       <nav className="container mx-auto px-4 sm:px-6 lg:px-8">
         <div className="flex h-16 items-center justify-between">
+          {/* Logo */}
           <div className="flex items-center">
             <Link to="/" className="flex items-center gap-2">
               <div className="h-10 w-10 rounded-lg bg-primary flex items-center justify-center">
                 <span className="text-primary-foreground font-bold text-xl">E</span>
               </div>
-              <span className="text-xl font-bold text-foreground">Evensia</span>
+              <span className="text-xl font-bold">
+                <span className="text-primary">Even</span>
+                <span className="text-foreground">sia</span>
+              </span>
             </Link>
           </div>
 
-          {/* Desktop Navigation */}
-          <div className="hidden lg:flex lg:items-center lg:gap-8">
+          {/* Desktop Navigation - Centered */}
+          <div className="hidden lg:flex lg:items-center lg:gap-6">
             {navigation.map((item) => (
               <Link
                 key={item.name}
@@ -46,17 +67,37 @@ export function Header() {
             ))}
           </div>
 
+          {/* Right side - Theme toggle & Login */}
           <div className="hidden lg:flex lg:items-center lg:gap-4">
-            <Button variant="ghost" size="sm">
-              Sign In
-            </Button>
-            <Button variant="default" size="sm">
-              Get Started
+            {/* Theme Toggle */}
+            <div className="flex items-center gap-2">
+              <Sun className="h-4 w-4 text-muted-foreground" />
+              <Switch
+                checked={isDark}
+                onCheckedChange={toggleTheme}
+                className="data-[state=checked]:bg-primary"
+              />
+              <Moon className="h-4 w-4 text-muted-foreground" />
+            </div>
+            
+            <Button variant="default" size="sm" className="rounded-full px-6">
+              Login
             </Button>
           </div>
 
           {/* Mobile menu button */}
-          <div className="lg:hidden">
+          <div className="lg:hidden flex items-center gap-2">
+            {/* Mobile Theme Toggle */}
+            <div className="flex items-center gap-1">
+              <Sun className="h-4 w-4 text-muted-foreground" />
+              <Switch
+                checked={isDark}
+                onCheckedChange={toggleTheme}
+                className="data-[state=checked]:bg-primary scale-75"
+              />
+              <Moon className="h-4 w-4 text-muted-foreground" />
+            </div>
+            
             <Button
               variant="ghost"
               size="icon"
@@ -85,12 +126,9 @@ export function Header() {
                   {item.name}
                 </Link>
               ))}
-              <div className="flex flex-col gap-2 pt-4 border-t border-border">
-                <Button variant="ghost" size="sm">
-                  Sign In
-                </Button>
-                <Button variant="default" size="sm">
-                  Get Started
+              <div className="pt-4 border-t border-border">
+                <Button variant="default" size="sm" className="w-full rounded-full">
+                  Login
                 </Button>
               </div>
             </div>
