@@ -64,11 +64,11 @@ export function BenefitsSection() {
               }`}
             >
               <div className={index % 2 === 1 ? "lg:order-2" : ""}>
-                <div className="relative rounded-2xl overflow-hidden shadow-2xl">
+                <div className="relative rounded-2xl overflow-hidden shadow-2xl group">
                   <img
                     src={audience.image}
                     alt={audience.title}
-                    className="w-full h-80 object-cover"
+                    className="w-full h-80 object-cover transition-transform duration-700 group-hover:scale-110"
                   />
                   <div className="absolute inset-0 bg-gradient-to-t from-background/60 to-transparent" />
                 </div>
@@ -83,13 +83,14 @@ export function BenefitsSection() {
                 </p>
 
                 <div className="space-y-4">
-                  {audience.benefits.map((benefit) => (
+                  {audience.benefits.map((benefit, benefitIndex) => (
                     <div
                       key={benefit.text}
-                      className="flex items-center gap-4 p-4 rounded-xl bg-accent/50 hover:bg-accent transition-colors"
+                      className="flex items-center gap-4 p-4 rounded-xl bg-accent/50 hover:bg-accent transition-all duration-300 hover:translate-x-2 hover:shadow-md group/benefit"
+                      style={{ animationDelay: `${benefitIndex * 100}ms` }}
                     >
-                      <div className="h-12 w-12 rounded-lg bg-primary/10 flex items-center justify-center">
-                        <benefit.icon className="h-6 w-6 text-primary" />
+                      <div className="h-12 w-12 rounded-lg bg-primary/10 flex items-center justify-center transition-all duration-300 group-hover/benefit:bg-primary group-hover/benefit:scale-110">
+                        <benefit.icon className="h-6 w-6 text-primary transition-colors group-hover/benefit:text-primary-foreground" />
                       </div>
                       <span className="font-medium text-foreground">{benefit.text}</span>
                     </div>

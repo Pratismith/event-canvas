@@ -63,29 +63,31 @@ export function FeaturedEventsSection() {
               Upcoming & Live Exhibitions
             </h2>
           </div>
-          <Button variant="outline" asChild>
+          <Button variant="outline" asChild className="hover-scale">
             <Link to="/events">
               View All Events
-              <ArrowRight className="ml-2 h-4 w-4" />
+              <ArrowRight className="ml-2 h-4 w-4 transition-transform group-hover:translate-x-1" />
             </Link>
           </Button>
         </div>
 
         <div className="grid sm:grid-cols-2 lg:grid-cols-4 gap-6">
-          {events.map((event) => (
+          {events.map((event, index) => (
             <Link
               key={event.id}
               to={`/events/${event.id}`}
-              className="group bg-background rounded-2xl overflow-hidden shadow-lg hover:shadow-xl transition-all duration-300 hover:-translate-y-1"
+              className="group bg-background rounded-2xl overflow-hidden shadow-lg hover:shadow-xl transition-all duration-500 hover:-translate-y-2 hover:shadow-primary/10"
+              style={{ animationDelay: `${index * 100}ms` }}
             >
               <div className="relative h-48 overflow-hidden">
                 <img
                   src={event.image}
                   alt={event.title}
-                  className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-500"
+                  className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-700"
                 />
+                <div className="absolute inset-0 bg-gradient-to-t from-background/60 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
                 <div className="absolute top-4 left-4 flex gap-2">
-                  <Badge variant="secondary" className="bg-background/90 backdrop-blur-sm">
+                  <Badge variant="secondary" className="bg-background/90 backdrop-blur-sm transition-transform duration-300 group-hover:scale-105">
                     {event.category}
                   </Badge>
                   {event.isLive && (
@@ -97,17 +99,17 @@ export function FeaturedEventsSection() {
               </div>
 
               <div className="p-5">
-                <h3 className="font-semibold text-lg text-foreground mb-3 group-hover:text-primary transition-colors">
+                <h3 className="font-semibold text-lg text-foreground mb-3 group-hover:text-primary transition-colors duration-300">
                   {event.title}
                 </h3>
 
                 <div className="space-y-2 text-sm text-muted-foreground">
                   <div className="flex items-center gap-2">
-                    <Calendar className="h-4 w-4" />
+                    <Calendar className="h-4 w-4 transition-colors group-hover:text-primary" />
                     <span>{event.date}</span>
                   </div>
                   <div className="flex items-center gap-2">
-                    <MapPin className="h-4 w-4" />
+                    <MapPin className="h-4 w-4 transition-colors group-hover:text-primary" />
                     <span>{event.location}</span>
                   </div>
                 </div>
@@ -116,8 +118,9 @@ export function FeaturedEventsSection() {
                   <span className="text-sm text-muted-foreground">
                     {event.exhibitors} Exhibitors
                   </span>
-                  <span className="text-primary font-medium text-sm group-hover:underline">
-                    Explore →
+                  <span className="text-primary font-medium text-sm flex items-center gap-1 transition-transform duration-300 group-hover:translate-x-1">
+                    Explore 
+                    <ArrowRight className="h-4 w-4" />
                   </span>
                 </div>
               </div>
