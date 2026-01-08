@@ -41,7 +41,7 @@ export function Header() {
           {/* Logo */}
           <div className="flex items-center">
             <Link to="/" className="flex items-center gap-2">
-              <img src={logo} alt="Evensia" className="h-10 w-auto" />
+              <img src={logo} alt="Evensia" className="h-14 w-auto" />
               <span className="text-xl font-bold">
                 <span className="text-primary">Even</span>
                 <span className="text-foreground">sia</span>
