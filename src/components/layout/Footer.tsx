@@ -31,7 +31,7 @@ export function Footer() {
           {/* Brand */}
           <div className="lg:col-span-2">
             <Link to="/" className="flex items-center gap-2 mb-4">
-              <img src={logo} alt="Evensia" className="h-10 w-auto" />
+              <img src={logo} alt="Evensia" className="h-16 w-auto" />
               <span className="text-xl font-bold">Evensia</span>
             </Link>
             <p className="text-secondary-foreground/80 mb-6 max-w-sm">
