@@ -17,11 +17,20 @@ const navigation = [
 export function Header() {
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
   const [isDark, setIsDark] = useState(false);
+  const [scrolled, setScrolled] = useState(false);
   const location = useLocation();
 
   useEffect(() => {
     const isDarkMode = document.documentElement.classList.contains("dark");
     setIsDark(isDarkMode);
+  }, []);
+
+  useEffect(() => {
+    const handleScroll = () => {
+      setScrolled(window.scrollY > 20);
+    };
+    window.addEventListener("scroll", handleScroll);
+    return () => window.removeEventListener("scroll", handleScroll);
   }, []);
 
   const toggleTheme = () => {
@@ -35,27 +44,41 @@ export function Header() {
   };
 
   return (
-    <header className="fixed top-0 left-0 right-0 z-50 bg-background/95 backdrop-blur-md border-b border-border shadow-sm">
+    <header 
+      className={`fixed top-4 left-4 right-4 z-50 transition-all duration-500 ease-out rounded-2xl border border-border/50 ${
+        scrolled 
+          ? "bg-background/80 backdrop-blur-xl shadow-lg" 
+          : "bg-background/60 backdrop-blur-md shadow-md"
+      }`}
+    >
       <nav className="container mx-auto px-4 sm:px-6 lg:px-8">
         <div className="flex h-16 items-center justify-between">
           {/* Logo */}
           <div className="flex items-center">
-            <Link to="/" className="flex items-center gap-3">
-              <img src={logo} alt="Evensia" className="h-12 w-auto" />
+            <Link 
+              to="/" 
+              className="flex items-center gap-3 group transition-transform duration-300 hover:scale-105"
+            >
+              <img 
+                src={logo} 
+                alt="Evensia" 
+                className="h-12 w-auto transition-all duration-300 group-hover:drop-shadow-lg" 
+              />
             </Link>
           </div>
 
           {/* Desktop Navigation - Centered */}
-          <div className="hidden lg:flex lg:items-center lg:gap-6">
-            {navigation.map((item) => (
+          <div className="hidden lg:flex lg:items-center lg:gap-1 bg-muted/30 rounded-full px-2 py-1">
+            {navigation.map((item, index) => (
               <Link
                 key={item.name}
                 to={item.href}
-                className={`text-sm font-medium transition-colors hover:text-primary ${
+                className={`relative px-4 py-2 text-sm font-medium transition-all duration-300 rounded-full ${
                   location.pathname === item.href
-                    ? "text-primary"
-                    : "text-muted-foreground"
+                    ? "text-primary-foreground bg-primary shadow-md"
+                    : "text-muted-foreground hover:text-foreground hover:bg-muted/50"
                 }`}
+                style={{ animationDelay: `${index * 50}ms` }}
               >
                 {item.name}
               </Link>
@@ -65,17 +88,21 @@ export function Header() {
           {/* Right side - Theme toggle & Login */}
           <div className="hidden lg:flex lg:items-center lg:gap-4">
             {/* Theme Toggle */}
-            <div className="flex items-center gap-2">
-              <Sun className="h-4 w-4 text-muted-foreground" />
+            <div className="flex items-center gap-2 bg-muted/30 rounded-full px-3 py-2">
+              <Sun className="h-4 w-4 text-muted-foreground transition-colors" />
               <Switch
                 checked={isDark}
                 onCheckedChange={toggleTheme}
                 className="data-[state=checked]:bg-primary"
               />
-              <Moon className="h-4 w-4 text-muted-foreground" />
+              <Moon className="h-4 w-4 text-muted-foreground transition-colors" />
             </div>
             
-            <Button variant="default" size="sm" className="rounded-full px-6">
+            <Button 
+              variant="default" 
+              size="sm" 
+              className="rounded-full px-6 transition-all duration-300 hover:scale-105 hover:shadow-lg hover:shadow-primary/25"
+            >
               Login
             </Button>
           </div>
@@ -83,52 +110,65 @@ export function Header() {
           {/* Mobile menu button */}
           <div className="lg:hidden flex items-center gap-2">
             {/* Mobile Theme Toggle */}
-            <div className="flex items-center gap-1">
-              <Sun className="h-4 w-4 text-muted-foreground" />
+            <div className="flex items-center gap-1 bg-muted/30 rounded-full px-2 py-1">
+              <Sun className="h-3 w-3 text-muted-foreground" />
               <Switch
                 checked={isDark}
                 onCheckedChange={toggleTheme}
                 className="data-[state=checked]:bg-primary scale-75"
               />
-              <Moon className="h-4 w-4 text-muted-foreground" />
+              <Moon className="h-3 w-3 text-muted-foreground" />
             </div>
             
             <Button
               variant="ghost"
               size="icon"
               onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
+              className="transition-transform duration-300 hover:scale-110"
             >
-              {mobileMenuOpen ? <X className="h-6 w-6" /> : <Menu className="h-6 w-6" />}
+              <div className={`transition-transform duration-300 ${mobileMenuOpen ? 'rotate-90' : ''}`}>
+                {mobileMenuOpen ? <X className="h-6 w-6" /> : <Menu className="h-6 w-6" />}
+              </div>
             </Button>
           </div>
         </div>
 
         {/* Mobile Navigation */}
-        {mobileMenuOpen && (
-          <div className="lg:hidden py-4 border-t border-border">
-            <div className="flex flex-col gap-4">
-              {navigation.map((item) => (
-                <Link
-                  key={item.name}
-                  to={item.href}
-                  className={`text-sm font-medium transition-colors hover:text-primary ${
-                    location.pathname === item.href
-                      ? "text-primary"
-                      : "text-muted-foreground"
-                  }`}
-                  onClick={() => setMobileMenuOpen(false)}
-                >
-                  {item.name}
-                </Link>
-              ))}
-              <div className="pt-4 border-t border-border">
-                <Button variant="default" size="sm" className="w-full rounded-full">
-                  Login
-                </Button>
-              </div>
+        <div 
+          className={`lg:hidden overflow-hidden transition-all duration-300 ease-out ${
+            mobileMenuOpen ? "max-h-96 opacity-100 py-4" : "max-h-0 opacity-0"
+          }`}
+        >
+          <div className="flex flex-col gap-2 border-t border-border/50 pt-4">
+            {navigation.map((item, index) => (
+              <Link
+                key={item.name}
+                to={item.href}
+                className={`text-sm font-medium transition-all duration-300 px-4 py-2 rounded-lg ${
+                  location.pathname === item.href
+                    ? "text-primary-foreground bg-primary"
+                    : "text-muted-foreground hover:text-foreground hover:bg-muted/50"
+                }`}
+                style={{ 
+                  animationDelay: `${index * 50}ms`,
+                  transform: mobileMenuOpen ? 'translateX(0)' : 'translateX(-20px)'
+                }}
+                onClick={() => setMobileMenuOpen(false)}
+              >
+                {item.name}
+              </Link>
+            ))}
+            <div className="pt-2 border-t border-border/50 mt-2">
+              <Button 
+                variant="default" 
+                size="sm" 
+                className="w-full rounded-full transition-all duration-300 hover:scale-[1.02]"
+              >
+                Login
+              </Button>
             </div>
           </div>
-        )}
+        </div>
       </nav>
     </header>
   );

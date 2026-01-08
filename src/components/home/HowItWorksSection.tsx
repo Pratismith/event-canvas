@@ -41,24 +41,24 @@ export function HowItWorksSection() {
           {steps.map((step, index) => (
             <div
               key={step.title}
-              className="relative bg-background rounded-2xl p-8 shadow-lg hover:shadow-xl transition-all duration-300 group"
+              className="relative bg-background rounded-2xl p-8 shadow-lg hover:shadow-xl transition-all duration-500 group hover:-translate-y-2 hover:shadow-primary/10"
             >
               {/* Step Number */}
-              <div className="absolute -top-4 -left-4 h-12 w-12 rounded-full bg-primary text-primary-foreground flex items-center justify-center font-bold text-lg shadow-lg">
+              <div className="absolute -top-4 -left-4 h-12 w-12 rounded-full bg-primary text-primary-foreground flex items-center justify-center font-bold text-lg shadow-lg transition-transform duration-300 group-hover:scale-110 group-hover:rotate-12">
                 {index + 1}
               </div>
 
               {/* Icon */}
-              <div className="h-16 w-16 rounded-xl bg-accent flex items-center justify-center mb-6 group-hover:scale-110 transition-transform duration-300">
-                <step.icon className="h-8 w-8 text-primary" />
+              <div className="h-16 w-16 rounded-xl bg-accent flex items-center justify-center mb-6 group-hover:scale-110 group-hover:bg-primary transition-all duration-300">
+                <step.icon className="h-8 w-8 text-primary group-hover:text-primary-foreground transition-colors duration-300" />
               </div>
 
-              <h3 className="text-xl font-bold text-foreground mb-3">{step.title}</h3>
+              <h3 className="text-xl font-bold text-foreground mb-3 group-hover:text-primary transition-colors duration-300">{step.title}</h3>
               <p className="text-muted-foreground">{step.description}</p>
 
               {/* Connector Line */}
               {index < steps.length - 1 && (
-                <div className="hidden md:block absolute top-1/2 -right-4 w-8 h-0.5 bg-border" />
+                <div className="hidden md:block absolute top-1/2 -right-4 w-8 h-0.5 bg-border group-hover:bg-primary transition-colors duration-300" />
               )}
             </div>
           ))}
