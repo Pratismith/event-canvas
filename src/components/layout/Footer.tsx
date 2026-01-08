@@ -1,5 +1,6 @@
 import { Link } from "react-router-dom";
-import { Mail, Phone, MapPin, Linkedin, Twitter, Instagram } from "lucide-react";
+import { Mail, MapPin, Linkedin, Twitter, Instagram } from "lucide-react";
+import logo from "@/assets/logo.png";
 
 const footerLinks = {
   platform: [
@@ -30,9 +31,7 @@ export function Footer() {
           {/* Brand */}
           <div className="lg:col-span-2">
             <Link to="/" className="flex items-center gap-2 mb-4">
-              <div className="h-10 w-10 rounded-lg bg-primary flex items-center justify-center">
-                <span className="text-primary-foreground font-bold text-xl">E</span>
-              </div>
+              <img src={logo} alt="Evensia" className="h-10 w-auto" />
               <span className="text-xl font-bold">Evensia</span>
             </Link>
             <p className="text-secondary-foreground/80 mb-6 max-w-sm">

@@ -3,6 +3,7 @@ import { Link, useLocation } from "react-router-dom";
 import { Button } from "@/components/ui/button";
 import { Menu, X, Moon, Sun } from "lucide-react";
 import { Switch } from "@/components/ui/switch";
+import logo from "@/assets/logo.png";
 
 const navigation = [
   { name: "Home", href: "/" },
@@ -40,9 +41,7 @@ export function Header() {
           {/* Logo */}
           <div className="flex items-center">
             <Link to="/" className="flex items-center gap-2">
-              <div className="h-10 w-10 rounded-lg bg-primary flex items-center justify-center">
-                <span className="text-primary-foreground font-bold text-xl">E</span>
-              </div>
+              <img src={logo} alt="Evensia" className="h-10 w-auto" />
               <span className="text-xl font-bold">
                 <span className="text-primary">Even</span>
                 <span className="text-foreground">sia</span>
