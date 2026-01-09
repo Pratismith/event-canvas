@@ -5,101 +5,40 @@ import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
 import { Input } from "@/components/ui/input";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
-import { Calendar, MapPin, Search, Filter } from "lucide-react";
-import itExpo from "@/assets/events/it-expo.jpg";
-import tourismExpo from "@/assets/events/tourism-expo.jpg";
-import startupExpo from "@/assets/events/startup-expo.jpg";
-import infrastructureExpo from "@/assets/events/infrastructure-expo.jpg";
-
-const allEvents = [
-  {
-    id: 1,
-    title: "TechIndia IT Expo 2026",
-    category: "IT & Technology",
-    location: "Bangalore, India",
-    date: "March 15-18, 2026",
-    image: itExpo,
-    exhibitors: 120,
-    isLive: true,
-    description: "India's largest IT and technology exhibition featuring cutting-edge software, hardware, and digital solutions.",
-  },
-  {
-    id: 2,
-    title: "Tourism & Travel Fair",
-    category: "Tourism",
-    location: "Dubai, UAE",
-    date: "April 5-8, 2026",
-    image: tourismExpo,
-    exhibitors: 85,
-    isLive: false,
-    description: "Explore destinations worldwide, connect with travel agencies, and discover exclusive travel packages.",
-  },
-  {
-    id: 3,
-    title: "Startup India Summit",
-    category: "Startups",
-    location: "Mumbai, India",
-    date: "May 20-22, 2026",
-    image: startupExpo,
-    exhibitors: 200,
-    isLive: false,
-    description: "Connect with innovative startups, investors, and industry leaders shaping the future of business.",
-  },
-  {
-    id: 4,
-    title: "Build & Infrastructure Expo",
-    category: "Infrastructure",
-    location: "Delhi, India",
-    date: "June 10-13, 2026",
-    image: infrastructureExpo,
-    exhibitors: 95,
-    isLive: false,
-    description: "Showcasing the latest in construction, building materials, and infrastructure development.",
-  },
-  {
-    id: 5,
-    title: "AgriTech Innovation Fair",
-    category: "Agriculture",
-    location: "Hyderabad, India",
-    date: "July 8-11, 2026",
-    image: itExpo,
-    exhibitors: 75,
-    isLive: false,
-    description: "Agricultural technology and innovation exhibition for modern farming solutions.",
-  },
-  {
-    id: 6,
-    title: "Cultural Heritage Exhibition",
-    category: "Culture",
-    location: "Guwahati, India",
-    date: "August 15-18, 2026",
-    image: tourismExpo,
-    exhibitors: 60,
-    isLive: false,
-    description: "Celebrating cultural diversity with traditional crafts, arts, and heritage displays.",
-  },
-];
-
-const categories = [
-  "All Categories",
-  "IT & Technology",
-  "Tourism",
-  "Startups",
-  "Infrastructure",
-  "Agriculture",
-  "Culture",
-];
+import { Calendar, MapPin, Search, Filter, Globe } from "lucide-react";
+import { events, sectors, locations, eventTypes } from "@/data/events";
+import type { EventType } from "@/types/event";
 
 const Events = () => {
   const [searchTerm, setSearchTerm] = useState("");
-  const [selectedCategory, setSelectedCategory] = useState("All Categories");
+  const [selectedSector, setSelectedSector] = useState("All Sectors");
+  const [selectedLocation, setSelectedLocation] = useState("All Locations");
+  const [selectedEventType, setSelectedEventType] = useState("all");
 
-  const filteredEvents = allEvents.filter((event) => {
+  const filteredEvents = events.filter((event) => {
     const matchesSearch = event.title.toLowerCase().includes(searchTerm.toLowerCase()) ||
-      event.location.toLowerCase().includes(searchTerm.toLowerCase());
-    const matchesCategory = selectedCategory === "All Categories" || event.category === selectedCategory;
-    return matchesSearch && matchesCategory;
+      event.location.toLowerCase().includes(searchTerm.toLowerCase()) ||
+      event.description.toLowerCase().includes(searchTerm.toLowerCase());
+    const matchesSector = selectedSector === "All Sectors" || event.sector === selectedSector;
+    const matchesLocation = selectedLocation === "All Locations" || event.location === selectedLocation;
+    const matchesType = selectedEventType === "all" || event.eventType === selectedEventType;
+    return matchesSearch && matchesSector && matchesLocation && matchesType;
   });
+
+  const formatDateRange = (startDate: string, endDate: string) => {
+    const start = new Date(startDate);
+    const end = new Date(endDate);
+    const startStr = start.toLocaleDateString("en-IN", { month: "short", day: "numeric" });
+    const endStr = end.toLocaleDateString("en-IN", { month: "short", day: "numeric", year: "numeric" });
+    return `${startStr} - ${endStr}`;
+  };
+
+  const clearFilters = () => {
+    setSearchTerm("");
+    setSelectedSector("All Sectors");
+    setSelectedLocation("All Locations");
+    setSelectedEventType("all");
+  };
 
   return (
     <Layout>
@@ -126,15 +65,38 @@ const Events = () => {
                 onChange={(e) => setSearchTerm(e.target.value)}
               />
             </div>
-            <Select value={selectedCategory} onValueChange={setSelectedCategory}>
-              <SelectTrigger className="w-full sm:w-56 h-12">
-                <Filter className="h-4 w-4 mr-2" />
-                <SelectValue placeholder="Category" />
+            <Select value={selectedSector} onValueChange={setSelectedSector}>
+              <SelectTrigger className="w-full sm:w-48 h-12">
+                <SelectValue placeholder="Sector" />
               </SelectTrigger>
               <SelectContent>
-                {categories.map((category) => (
-                  <SelectItem key={category} value={category}>
-                    {category}
+                {sectors.map((sector) => (
+                  <SelectItem key={sector} value={sector}>
+                    {sector}
+                  </SelectItem>
+                ))}
+              </SelectContent>
+            </Select>
+            <Select value={selectedLocation} onValueChange={setSelectedLocation}>
+              <SelectTrigger className="w-full sm:w-48 h-12">
+                <SelectValue placeholder="Location" />
+              </SelectTrigger>
+              <SelectContent>
+                {locations.map((location) => (
+                  <SelectItem key={location} value={location}>
+                    {location}
+                  </SelectItem>
+                ))}
+              </SelectContent>
+            </Select>
+            <Select value={selectedEventType} onValueChange={setSelectedEventType}>
+              <SelectTrigger className="w-full sm:w-40 h-12">
+                <SelectValue placeholder="Type" />
+              </SelectTrigger>
+              <SelectContent>
+                {eventTypes.map((type) => (
+                  <SelectItem key={type.value} value={type.value}>
+                    {type.label}
                   </SelectItem>
                 ))}
               </SelectContent>
@@ -165,13 +127,19 @@ const Events = () => {
                     alt={event.title}
                     className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-500"
                   />
-                  <div className="absolute top-4 left-4 flex gap-2">
+                  <div className="absolute top-4 left-4 flex flex-wrap gap-2">
                     <Badge variant="secondary" className="bg-background/90 backdrop-blur-sm">
-                      {event.category}
+                      {event.sector}
                     </Badge>
-                    {event.isLive && (
+                    {event.status === "live" && (
                       <Badge className="bg-destructive text-destructive-foreground animate-pulse">
                         Live Now
+                      </Badge>
+                    )}
+                    {event.hasOnlineAccess && (
+                      <Badge variant="outline" className="bg-background/90 backdrop-blur-sm border-primary text-primary">
+                        <Globe className="h-3 w-3 mr-1" />
+                        Online
                       </Badge>
                     )}
                   </div>
@@ -188,7 +156,7 @@ const Events = () => {
                   <div className="space-y-2 text-sm text-muted-foreground mb-4">
                     <div className="flex items-center gap-2">
                       <Calendar className="h-4 w-4" />
-                      <span>{event.date}</span>
+                      <span>{formatDateRange(event.startDate, event.endDate)}</span>
                     </div>
                     <div className="flex items-center gap-2">
                       <MapPin className="h-4 w-4" />
@@ -198,7 +166,7 @@ const Events = () => {
 
                   <div className="pt-4 border-t border-border flex items-center justify-between">
                     <span className="text-sm text-muted-foreground">
-                      {event.exhibitors} Exhibitors
+                      {event.exhibitorCount} Exhibitors
                     </span>
                     <Button variant="ghost" size="sm" className="text-primary">
                       Explore Event →
@@ -212,7 +180,7 @@ const Events = () => {
           {filteredEvents.length === 0 && (
             <div className="text-center py-16">
               <p className="text-xl text-muted-foreground mb-4">No events found</p>
-              <Button variant="outline" onClick={() => { setSearchTerm(""); setSelectedCategory("All Categories"); }}>
+              <Button variant="outline" onClick={clearFilters}>
                 Clear Filters
               </Button>
             </div>
