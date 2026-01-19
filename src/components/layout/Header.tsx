@@ -7,10 +7,8 @@ import logo from "@/assets/logo.png";
 
 const navigation = [
   { name: "Home", href: "/" },
-  { name: "Events", href: "/events" },
-  { name: "About", href: "/about" },
-  { name: "For Exhibitors", href: "/exhibitors" },
-  { name: "For Organizers", href: "/organizers" },
+  { name: "Events & Exhibitions", href: "/events" },
+  { name: "About Us", href: "/about" },
   { name: "Contact", href: "/contact" },
 ];
 
