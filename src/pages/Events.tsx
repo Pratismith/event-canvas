@@ -47,7 +47,7 @@ const Events = () => {
         <div className="container mx-auto px-4 sm:px-6 lg:px-8">
           <div className="text-center mb-12">
             <h1 className="text-4xl sm:text-5xl font-bold text-foreground mb-4">
-              Explore Events
+              Events & Exhibitions
             </h1>
             <p className="text-lg text-muted-foreground max-w-2xl mx-auto">
               Discover exhibitions across sectors—IT, Tourism, Infrastructure, Startups, and more. Access them digitally from anywhere.

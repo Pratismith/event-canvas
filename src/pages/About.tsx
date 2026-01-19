@@ -56,7 +56,7 @@ const About = () => {
         <div className="container mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
           <div className="max-w-3xl mx-auto text-center">
             <span className="text-sm font-semibold text-primary uppercase tracking-wider">
-              About Evensia
+              About Us
             </span>
             <h1 className="text-4xl sm:text-5xl font-bold text-foreground mt-4 mb-6">
               Digital Footprint of a Physical Event
