@@ -26,9 +26,12 @@ export function HeroSection() {
           </div>
 
           <h1 className="text-4xl sm:text-5xl lg:text-6xl font-bold text-foreground leading-tight mb-6 opacity-0 animate-fade-in animate-delay-200">
-            Take Events{" "}
+            <span className="text-primary">Discover</span>
+            <span className="text-muted-foreground mx-2">.</span>
+            <span className="text-primary">Book</span>
+            <span className="text-muted-foreground mx-2">.</span>
             <span className="text-primary relative">
-              Beyond Venues
+              Explore
               <span className="absolute -bottom-2 left-0 w-full h-1 bg-primary/30 rounded-full" />
             </span>
           </h1>
