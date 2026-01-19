@@ -49,9 +49,9 @@ export function HeroSection() {
               </Link>
             </Button>
             <Button variant="heroOutline" size="xl" asChild className="hover-scale">
-              <Link to="/about">
+              <Link to="/organizers">
                 <Play className="mr-2 h-5 w-5" />
-                Watch How It Works
+                Host an Event
               </Link>
             </Button>
           </div>
