@@ -1,6 +1,6 @@
 import { Link } from "react-router-dom";
 import { Button } from "@/components/ui/button";
-import { ArrowRight, Play, Globe, Users, Building2 } from "lucide-react";
+import { ArrowRight, Play, CalendarSearch, LayoutDashboard, BarChart3 } from "lucide-react";
 import heroImage from "@/assets/hero-exhibition.jpg";
 
 export function HeroSection() {
@@ -56,33 +56,33 @@ export function HeroSection() {
             </Button>
           </div>
 
-          {/* Stats */}
+          {/* Features */}
           <div className="grid grid-cols-3 gap-8 opacity-0 animate-fade-in animate-delay-500">
             <div className="flex items-center gap-3 group">
               <div className="h-12 w-12 rounded-lg bg-accent flex items-center justify-center transition-all duration-300 group-hover:bg-primary group-hover:scale-110">
-                <Globe className="h-6 w-6 text-primary transition-colors group-hover:text-primary-foreground" />
+                <CalendarSearch className="h-6 w-6 text-primary transition-colors group-hover:text-primary-foreground" />
               </div>
               <div>
-                <p className="text-2xl font-bold text-foreground">100+</p>
-                <p className="text-sm text-muted-foreground">Events Listed</p>
+                <p className="text-sm font-semibold text-foreground">Explore Events</p>
+                <p className="text-xs text-muted-foreground">& Exhibitions</p>
               </div>
             </div>
             <div className="flex items-center gap-3 group">
               <div className="h-12 w-12 rounded-lg bg-accent flex items-center justify-center transition-all duration-300 group-hover:bg-primary group-hover:scale-110">
-                <Building2 className="h-6 w-6 text-primary transition-colors group-hover:text-primary-foreground" />
+                <LayoutDashboard className="h-6 w-6 text-primary transition-colors group-hover:text-primary-foreground" />
               </div>
               <div>
-                <p className="text-2xl font-bold text-foreground">500+</p>
-                <p className="text-sm text-muted-foreground">Exhibitors</p>
+                <p className="text-sm font-semibold text-foreground">Event</p>
+                <p className="text-xs text-muted-foreground">Dashboard</p>
               </div>
             </div>
             <div className="flex items-center gap-3 group">
               <div className="h-12 w-12 rounded-lg bg-accent flex items-center justify-center transition-all duration-300 group-hover:bg-primary group-hover:scale-110">
-                <Users className="h-6 w-6 text-primary transition-colors group-hover:text-primary-foreground" />
+                <BarChart3 className="h-6 w-6 text-primary transition-colors group-hover:text-primary-foreground" />
               </div>
               <div>
-                <p className="text-2xl font-bold text-foreground">10K+</p>
-                <p className="text-sm text-muted-foreground">Visitors</p>
+                <p className="text-sm font-semibold text-foreground">Event</p>
+                <p className="text-xs text-muted-foreground">Insights</p>
               </div>
             </div>
           </div>
